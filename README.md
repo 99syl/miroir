@@ -1,17 +1,17 @@
 # miroir
 
-miroir is a C++20 compile-time reflection library. It is still for now in experimental stage.
+miroir is a C++20 compile-time reflection library. It demonstrates how one can achieve simple reflection with some template tricks.
 
-### Build status
+### Important Notes !!!
 
-[![ubuntu-clang12-cmake](https://github.com/SylEze/miroir/actions/workflows/ubuntu-clang12-cmake.yml/badge.svg)](https://github.com/SylEze/miroir/actions/workflows/ubuntu-clang12-cmake.yml) [![ubuntu-g++10-cmake](https://github.com/SylEze/miroir/actions/workflows/ubuntu-g++10-cmake.yml/badge.svg)](https://github.com/SylEze/miroir/actions/workflows/ubuntu-g++10-cmake.yml) [![windows-msvc142-cmake](https://github.com/SylEze/miroir/actions/workflows/windows-msvc142-cmake.yml/badge.svg)](https://github.com/SylEze/miroir/actions/workflows/windows-msvc142-cmake.yml)
+This library has never been tested on real-world big projects so I have absolutely no idea how it performs in those situations. If you have some metrics, feel free to open an issue to submit it.
 
 ### Usage
 
-#### Generating type information
+#### Generating type information:
 
 ```cpp
-#include <miroir/type.hpp>
+#include <miroir.hpp>
 
 struct point2d
 {
@@ -22,21 +22,23 @@ struct point2d
 
     void add_y(float y);
     
-    using type_info = miroir::type_info<point2d>
-        ::with_name<"point2d">
+    using type_info = miroir::type_info_builder<point2d>
+        ::set_name<"point2d">
         
-        ::with_field<&point2d::x, "x">
-        ::with_field<&point2d::y, "y">
+        ::add_field<&point2d::x, "x">
+        ::add_field<&point2d::y, "y">
 
-        ::with_method<&point2d::add_x, "add_x">
-        ::with_method<&point2d::add_y, "add_y">;
+        ::add_method<&point2d::add_x, "add_x">
+        ::add_method<&point2d::add_y, "add_y">
+        
+        ::result;
 };
 ```
 
-#### Fetching a field/method from a type
+#### Fetching a field/method from a type:
 
 ```cpp
-#include <miroir/type.hpp>
+#include <miroir.hpp>
 
 int main()
 {
@@ -57,8 +59,15 @@ int main()
 
     add_x_info::invoke(p, 2.5);
 }
+
 ```
 
-### Examples
+#### Iterating over every field/method from a type:
+```cpp
+miroir::for_each_field<T>([]<typename FieldInfo>
+{
+    ...
+});
+```
 
-The [examples](examples) folder is also available for more documentation and some use-case.
+The [examples](examples) folder is also available to show some use-cases.

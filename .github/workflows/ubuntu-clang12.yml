@@ -1,0 +1,23 @@
+name: ubuntu-clang12-cmake
+
+on: [push, pull_request]
+
+env:
+  CXX: clang++-12
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install compiler
+      run: |
+        sudo apt update
+        sudo apt -y install clang-12
+    - name: Compile tests
+      working-directory: tests
+      run: clang -std=c++20 main.cpp -o main.exe
+    - name: Run tests
+      working-directory: tests
+      run: ./main.exe

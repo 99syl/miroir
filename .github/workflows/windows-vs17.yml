@@ -1,0 +1,16 @@
+name: windows-vs17-cmake
+
+on: [push, pull_request]
+
+jobs:
+  run_tests:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Compile tests
+      working-directory: tests
+      run: cl /std:c++20 main.cpp
+    - name: Run tests
+      working-directory: tests
+      run: main.exe
