@@ -1,0 +1,47 @@
+name: ubuntu-g++10-cmake
+
+on: [push, pull_request]
+
+env:
+  CXX: g++-10
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install compiler
+      run: |
+        sudo apt update
+        sudo apt -y install g++-10
+    - name: Compile tests
+      working-directory: tests/build/cmake
+      run: |
+        cmake .
+        make
+    - name: Run tests
+      working-directory: tests/build/cmake
+      run: ./miroir_tests
+  
+  run_examples:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Compile basic_usage example
+      working-directory: examples/basic_usage/build/cmake
+      run: |
+        cmake .
+        make
+    - name: Run basic_usage example
+      working-directory: examples/basic_usage/build/cmake
+      run: ./miroir_basic_usage_example
+    - name: Compile json_serializer example
+      working-directory: examples/json_serializer/build/cmake
+      run: |
+        cmake .
+        make
+    - name: Run json_serializer_example
+      working-directory: examples/json_serializer/build/cmake
+      run: ./json_serializer

@@ -1,0 +1,40 @@
+name: windows-vs17-cmake
+
+on: [push, pull_request]
+
+jobs:
+  run_tests:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Compile tests
+      working-directory: tests/build/cmake
+      run: |
+        cmake . -G "Visual Studio 17 2022"
+        cmake --build .
+    - name: Run tests
+      working-directory: tests/build/cmake
+      run: miroir_tests
+  
+  run_examples:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Compile basic_usage example
+      working-directory: examples/basic_usage/build/cmake
+      run: |
+        cmake . -G "Visual Studio 17 2022"
+        cmake --build .
+    - name: Run basic_usage example
+      working-directory: examples/basic_usage/build/cmake
+      run: miroir_basic_usage_example
+    - name: Compile json_serializer example
+      working-directory: examples/json_serializer/build/cmake
+      run: |
+        cmake . -G "Visual Studio 17 2022"
+        cmake --build .
+    - name: Run json_serializer_example
+      working-directory: examples/json_serializer/build/cmake
+      run: json_serializer
