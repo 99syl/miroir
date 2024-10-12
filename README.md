@@ -1,10 +1,20 @@
 # miroir
 
-miroir is a C++20 compile-time reflection library. It demonstrates how one can achieve simple reflection with some template tricks.
+miroir is a C++20 compile-time reflection library. It demonstrates how one can achieve reflection with ugly template tricks.
+
+### Notes
+
+The API has still many room for improvement and new features, but I will probably not work on it anymore; since I'm fed up with "modern C++".
+
+This is the last C++ project I did before I gave up on "modern C++".
+The amount of trash that I had to write to have a fairly usable reflection library that does not rely on macros is insane for a supposedly "modern" language.
+Also the few reflection proposals that I saw were overly complex and used weird new keywords and punctuation that my brains absolutely does not like.
+
+This is the project that made me realise that I spent so many years of my life being unproductive trying to make things work because C++ metaprogramming is a mess.
 
 ### Important Notes !!!
 
-This library has never been tested on real-world big projects so I have absolutely no idea how it performs in those situations. If you have some metrics, feel free to open an issue to submit it.
+This library has never been tested on real-world big projects so I have absolutely no idea how it performs in those situations. If you have some metrics, feel free to submit it.
 
 ### Usage
 
